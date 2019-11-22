@@ -1,7 +1,7 @@
 import os
 import sys
-# sys.path.append('..')
-# sys.path.append('../..')
+sys.path.append('..')
+sys.path.append('../..')
 import argparse
 import utils
 from scipy.sparse import csr_matrix
@@ -15,7 +15,7 @@ from student_utils import *
 ======================================================================
 """
 # read file
-fp = open('demo.in')
+fp = open('200.in')
 vertices_num = int(fp.readline())
 home_num = int(fp.readline())
 vertices = fp.readline()
@@ -26,6 +26,7 @@ for i in range(0, vertices_num):
     temp = fp.readline()
     temp = [x for x in temp.split()]
     a.append(temp)
+
 # make MST, change x to 0
 for i in range(0, vertices_num):
     for j in range(0, vertices_num):
@@ -83,6 +84,7 @@ for i in startToEnd:
         stoplines.append(temp)
 
 output_line2 = len(stoplines)
+
 # print output
 for i in output_line1:
     print(i, end = " ")
@@ -92,16 +94,4 @@ for i in stoplines:
     for j in i:
         print(j, end = " ")
     print()
-
-
-
-
-
-
-
-
-
-
-
-
 

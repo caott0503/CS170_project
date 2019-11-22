@@ -5,8 +5,8 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 numLocations = 200
-numHomes = 100
-numEdges = 8000
+numHomes = 99
+numEdges = 12500
 
 
 """ Generate name of all possible locations. """
@@ -25,11 +25,11 @@ def randomVertex(n):
 
 """ Randomly assign coordinate for each position. """
 def randomPos():
-    return (100 * np.random.rand(), 100 * np.random.rand())
+    return (1000 * np.random.rand(), 1000 * np.random.rand())
 
 
 def distance(u, v):
-    return round(np.sqrt((u[0] - v[0]) ** 2 + (u[1] - v[1]) ** 2), 2)
+    return round(np.sqrt((u[0] - v[0]) ** 2 + (u[1] - v[1]) ** 2), 5)
 
 
 """ Generate the graph. """
@@ -37,8 +37,7 @@ def graphGenerator(l, h, e):
     locations = randomVertex(l)
     pos = [randomPos() for _ in range(l)]
     start = np.random.choice(locations)
-    rest = [loc for loc in locations if loc != start]
-    homes = list(np.random.choice(rest, size=h, replace=False))
+    homes = list(np.random.choice(locations, size=h, replace=False))
 
     graph = nx.Graph()
     for i in range(l):
