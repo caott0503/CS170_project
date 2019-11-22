@@ -1,6 +1,6 @@
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import minimum_spanning_tree
-fp = open("input.in")
+fp = open("demo.in")
 vertices_num = int(fp.readline())
 home_num = int(fp.readline())
 vertices = fp.readline()
