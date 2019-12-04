@@ -1,2 +1,2 @@
-# CS170_project
-Fall 2019 CS170 project.
+# project-fa19
+CS 170 Fall 2019 Project

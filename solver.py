@@ -4,12 +4,9 @@ sys.path.append('..')
 sys.path.append('../..')
 import argparse
 import utils
+from Christofides import christofides
 
 from student_utils import *
-from scipy.sparse import csr_matrix
-from scipy.sparse.csgraph import minimum_spanning_tree
-from shortestpath import *
-
 """
 ======================================================================
   Complete the following function.
@@ -29,57 +26,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         A dictionary mapping drop-off location to a list of homes of TAs that got off at that particular location
         NOTE: both outputs should be in terms of indices not the names of the locations themselves
     """
-    carPath = []
-    dropLocations = {}
-
-    """ make MST, change x to 0 """
-    adjacency_matrix_formatted = [[0 if entry == 'x' else entry for entry in row] for row in adjacency_matrix]
-    X = csr_matrix(adjacency_matrix_formatted)
-    Tcsr = minimum_spanning_tree(X)
-    mst = Tcsr.toarray()
-    for i in range(len(list_of_locations)):
-        for j in range(len(list_of_locations)):
-            if (mst[i][j] != 0):
-                mst[j][i] = mst[i][j]
-
-    start_index = list_of_locations.index(starting_car_location)
-    g = Graph()
-    gg = g.dijkstra(mst, start_index)
-    shortestpaths_start = gg[0]
-    end_index = gg[1]
-    startToEnd = gg[2]
-
-    """ make the car's route """
-    for i in range(len(startToEnd)):
-        temp = startToEnd[i]
-        output_line1.append(vertices[temp])
-        names_in_path.append(vertices[temp])
-    templist = startToEnd[:]
-    templist.pop()
-    for i in reversed(templist):
-        carPath.append(vertices[i])
-
-    """ make drop off locations """
-    for i in home:
-        gg = g.dijkstra(mst, vertices.index(i))
-        paths = gg[0]
-        s = []
-        for i in startToEnd:
-            s.append(paths[i])
-        target_distance = min(s)
-        target_vertex_index = paths.index(target_distance)
-        homestop.append(target_vertex_index)
-    stoplines = []
-    for i in startToEnd:
-        temp = []
-        temp.append(vertices[i])
-        for j in range(0, len(homestop)):
-            if homestop[j] == i:
-                temp.append(home[j])
-        if len(temp) > 1:
-            stoplines.append(temp)
-
-    return carPath, dropLocations
+    pass
 
 """
 ======================================================================
