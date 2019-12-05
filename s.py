@@ -6,7 +6,7 @@ import argparse
 import utils
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import minimum_spanning_tree
-from shortestpath import *
+from dijkstra import *
 
 from student_utils import *
 """

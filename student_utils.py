@@ -1,5 +1,7 @@
 import networkx as nx
 import numpy as np
+from sklearn import cluster
+import dijkstra
 
 
 def decimal_digits_check(number):
@@ -67,13 +69,14 @@ def is_valid_walk(G, closed_walk):
 def get_edges_from_path(path):
     return [(path[i], path[i+1]) for i in range(len(path) - 1)]
 
-"""
-G is the adjacency matrix.
-car_cycle is the cycle of the car in terms of indices.
-dropoff_mapping is a dictionary of dropoff location to list of TAs that got off at said droppoff location
-in terms of indices.
-"""
+
 def cost_of_solution(G, car_cycle, dropoff_mapping):
+    """
+    G is the adjacency matrix.
+    car_cycle is the cycle of the car in terms of indices.
+    drop-off_mapping is a dictionary of drop-off location to list of TAs that got off at said drop-off location
+    in terms of indices.
+    """
     cost = 0
     message = ''
     dropoffs = dropoff_mapping.keys()
@@ -112,5 +115,58 @@ def convert_locations_to_indices(list_to_convert, list_of_locations):
     return [list_of_locations.index(name) if name in list_of_locations else None for name in list_to_convert]
 
 
-def cluster():
+def convert_matrix(adjMatrix):
+    """
+    Convert 'x' into 0 if it is the vertice itself, INF if there is no edge.
+    """
+    numVertices = len(adjMatrix)
+    newMatrix = list(adjMatrix)
+
+    for i in range(numVertices):
+        for j in range(numVertices):
+            if adjMatrix[i][j] == 'x' and i == j:
+                newMatrix[i][j] = 0
+            elif adjMatrix[i][j] == 'x' and i != j:
+                newMatrix[i][j] = float('inf')
+    return newMatrix
+
+
+def shortestDist_matrix(adjMatrix):
+    """
+    Floyd-Warshall Algorithm.
+    Return an adjacency matrix where each entry is the length of the shortest path between two vertices.
+    """
+    numVertices = len(adjMatrix)
+    newMatrix = list(adjMatrix)
+
+    for k in range(numVertices):
+        for i in range(numVertices):
+            for j in range(numVertices):
+                newMatrix[i][j] = min(newMatrix[i][j], newMatrix[i][k] + newMatrix[k][j])
+    return newMatrix
+
+
+def shortestDist(adjMatrix, index1, index2):
+    """
+    Return the length of the shortest path between two vertices with index1 and index2.
+    """
+    return shortestDist_matrix(adjMatrix)[index1][index2]
+
+
+def shortestPath(adjMatrix, start, end):
+    """
+    Return the shortest path between two vertices with index1 and index2.
+    """
+    g = dijkstra.Graph()
+    paths = g.dijkstra(adjMatrix, start)
+    for path in paths:
+        if path[-1] == end:
+            return path
+
+
+def kMeans1(adjacency_matrix):
+    """
+    Return a list where each element is a list of points in the clustering
+    """
+
     return None
