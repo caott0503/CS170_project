@@ -3,6 +3,7 @@ import numpy as np
 from sklearn import cluster
 import dijkstra
 import itertools
+import copy
 
 def decimal_digits_check(number):
     number = str(number)
@@ -120,7 +121,7 @@ def convert_matrix(adjMatrix):
     Convert 'x' into 0 if it is the vertice itself, INF if there is no edge.
     """
     numVertices = len(adjMatrix)
-    newMatrix = list(adjMatrix)
+    newMatrix = copy.deepcopy(adjMatrix)
 
     for i in range(numVertices):
         for j in range(numVertices):
@@ -137,7 +138,7 @@ def shortestDist_matrix(adjMatrix):
     Return an adjacency matrix where each entry is the length of the shortest path between two vertices.
     """
     numVertices = len(adjMatrix)
-    newMatrix = list(adjMatrix)
+    newMatrix = copy.deepcopy(adjMatrix)
 
     for k in range(numVertices):
         for i in range(numVertices):

@@ -4,6 +4,7 @@ sys.path.append('..')
 sys.path.append('../..')
 import argparse
 import utils
+import acopy
 
 from student_utils import *
 """
@@ -11,6 +12,7 @@ from student_utils import *
   Complete the following function.
 ======================================================================
 """
+
 
 def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_matrix, params=[]):
     """
@@ -25,7 +27,22 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         A dictionary mapping drop-off location to a list of homes of TAs that got off at that particular location
         NOTE: both outputs should be in terms of indices not the names of the locations themselves
     """
-    pass
+    numLocations = len(list_of_locations)
+    numHomes = len(list_of_homes)
+    numCluster = numHomes
+    threshold = numHomes
+
+    matrix = convert_matrix(adjacency_matrix)
+    spMatrix = shortestDist_matrix(matrix)
+    clustering1 = hierarchical(list_of_locations, spMatrix, numCluster)
+    clustering2 = hierarchical_threshold(list_of_locations, spMatrix, threshold)
+
+
+    finalPath = []
+    dropoffLocations = {}
+
+    return finalPath, dropoffLocations
+
 
 """
 ======================================================================
