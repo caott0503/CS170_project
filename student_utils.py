@@ -265,8 +265,10 @@ def chrisInput_withVerticesInPath(matrix, vertices):
     return output, indexes
 
 
-
 def chrisInput_onlySelectedVertices(matrix, vertices):
+    """
+    Create a shortest
+    """
     output = shortestDist_matrix(matrix)
     indexes = vertices
     no_indexes = []

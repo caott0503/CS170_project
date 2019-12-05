@@ -37,6 +37,11 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     clustering1 = hierarchical(list_of_locations, spMatrix, numCluster)
     clustering2 = hierarchical_threshold(list_of_locations, spMatrix, threshold)
 
+    clusteringID = clustering1
+    dropoffs = chooseVertice(spMatrix, clustering1, list_of_homes)
+    newSPMatrix = chrisInput(matrix, dropoffs)
+
+    Path = []
 
     finalPath = []
     dropoffLocations = {}
