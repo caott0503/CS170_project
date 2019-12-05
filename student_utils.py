@@ -153,13 +153,20 @@ def shortestDist(adjMatrix, index1, index2):
     return shortestDist_matrix(adjMatrix)[index1][index2]
 
 
+def shortestPaths(adjMatrix, start):
+    """
+    Return the all shortest paths from a starting vertex.
+    """
+    g = dijkstra.Graph()
+    paths = g.dijkstra(adjMatrix, start)
+    return paths
+
+
 def shortestPath(adjMatrix, start, end):
     """
     Return the shortest path between two vertices with index1 and index2.
     """
-    g = dijkstra.Graph()
-    paths = g.dijkstra(adjMatrix, start)
-    for path in paths:
+    for path in shortestPaths(adjMatrix, start):
         if path[-1] == end:
             return path
 
@@ -191,3 +198,67 @@ def hierarchical_threshold(locations, shortestDistMatrix, threshold):
     clustering = [locations[x - y: x] for x, y in zip(itertools.accumulate(splitLength), splitLength)]
     return clustering
 
+
+def chooseVertice(shortestDistMatrix, clustersIndex, homes):
+    """
+    Choose a vertex index from each cluster so that it minimizes the distance to homes in each cluster.
+    """
+    vertices = []
+    for cluster in clustersIndex:
+        homes_in_cluster = []
+        for point in cluster:
+            if point in homes:
+                homes_in_cluster.append(point)
+        distances = []
+        for point in cluster:
+            distance = 0
+            for home in homes_in_cluster:
+                distance += shortestDistMatrix[point][home]
+            distances.append(distance)
+        vertices.append(cluster[distances.index(min(distances))])
+    return vertices
+
+
+def chrisInput(matrix, vertices):
+    """
+    Create a new pairwise shortest path matrix given vertices.
+    """
+    output = []
+    for i in range(len(matrix)):
+        temp = []
+        for j in range(len(matrix)):
+            temp.append(float("inf"))
+        output.append(temp)
+
+    for i in range(len(vertices)):
+        paths = shortestPaths(matrix, vertices[i])
+        j = i
+        while j < len(vertices):
+            listToAdd = paths[vertices[j]]
+            for k in range(len(listToAdd) - 1):
+                if output[listToAdd[k]][listToAdd[k + 1]] == float("inf"):
+                    output[listToAdd[k]][listToAdd[k + 1]] = matrix[listToAdd[k]][listToAdd[k + 1]]
+                    output[listToAdd[k + 1]][listToAdd[k]] = output[listToAdd[k]][listToAdd[k + 1]]
+            j += 1
+
+    indexes = []
+    for i in range(len(matrix)):
+        temp = output[i]
+        for j in temp:
+            if j != float("inf"):
+                indexes.append(i)
+                break
+
+    no_indexes = []
+    for i in range(len(matrix)):
+        if i not in indexes:
+            no_indexes.append(i)
+    for i in output:
+        for j in sorted(no_indexes, reverse=True):
+            del i[j]
+    for i in sorted(no_indexes, reverse=True):
+        del output[i]
+    for i in range(0, len(output)):
+        output[i][i] = 0
+
+    return output, indexes
