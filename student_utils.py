@@ -220,7 +220,7 @@ def chooseVertice(shortestDistMatrix, clustersIndex, homes):
     return vertices
 
 
-def chrisInput(matrix, vertices):
+def chrisInput_withVerticesInPath(matrix, vertices):
     """
     Create a new pairwise shortest path matrix given vertices.
     """
@@ -263,3 +263,21 @@ def chrisInput(matrix, vertices):
         output[i][i] = 0
 
     return output, indexes
+
+
+
+def chrisInput_onlySelectedVertices(matrix, vertices):
+    output = shortestDist_matrix(matrix)
+    indexes = vertices
+    no_indexes = []
+    for i in range(len(matrix)):
+        if i not in indexes:
+            no_indexes.append(i)
+    for i in output:
+        for j in sorted(no_indexes, reverse=True):
+            del i[j]
+    for i in sorted(no_indexes, reverse=True):
+        del output[i]
+    return output
+
+
