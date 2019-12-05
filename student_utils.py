@@ -164,7 +164,7 @@ def shortestPath(adjMatrix, start, end):
             return path
 
 
-def kMeans1(adjacency_matrix):
+def kMeans1(adjMatrix):
     """
     Return a list where each element is a list of points in the clustering
     """
