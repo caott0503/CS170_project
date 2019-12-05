@@ -164,9 +164,26 @@ def shortestPath(adjMatrix, start, end):
             return path
 
 
-def kMeans1(adjMatrix):
+def minHierarchical(adjMatrix):
     """
-    Return a list where each element is a list of points in the clustering
+    Use Hierarchical clustering (min) to return a list where each element is a list of points in the clustering
     """
 
     return None
+
+
+def maxHierarchical(adjMatrix):
+    """
+    Use Hierarchical clustering (max) to return a list where each element is a list of points in the clustering
+    """
+
+    return None
+
+
+def aveHierarchical(adjMatrix):
+    """
+    Use Hierarchical clustering (ave) to return a list where each element is a list of points in the clustering
+    """
+
+    return None
+
