@@ -5,7 +5,6 @@ sys.path.append('../..')
 import argparse
 import utils
 import acopy
-from Christofides import christofides
 
 from student_utils import *
 """
@@ -32,6 +31,11 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     numHomes = len(list_of_homes)
     numCluster = numHomes
     threshold = numHomes
+    vertices_index = range(len(list_of_locations))
+    home_index = []
+    for i in range(len(list_of_locations)):
+        if list_of_locations[i] in list_of_homes:
+            home_index.append(i)
 
     matrix = convert_matrix(adjacency_matrix)
     spMatrix = shortestDist_matrix(matrix)
@@ -39,8 +43,15 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     clustering2 = hierarchical_threshold(list_of_locations, spMatrix, threshold)
 
     clusteringID = clustering1
-    dropoffs = chooseVertice(spMatrix, clustering1, list_of_homes)
-    newSPMatrix = chrisInput(matrix, dropoffs)
+    for cluster in clusteringID:
+        home_count = 0
+        for vertex in cluster:
+            if vertex in home_index:
+                home_count+=1
+        if (home_count == 0):
+            clusteringID.remove(cluster)
+    dropoffs = chooseVertice(spMatrix, clusteringID, list_of_homes)
+    newSPMatrix = chrisInput_onlySelectedVertices(matrix, dropoffs)
 
     Path = []
 
