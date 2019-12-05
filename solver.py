@@ -33,6 +33,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     threshold = numHomes
     vertices_index = range(len(list_of_locations))
     home_index = []
+    starting_index = list_of_locations.index(starting_car_location)
     for i in range(len(list_of_locations)):
         if list_of_locations[i] in list_of_homes:
             home_index.append(i)
@@ -41,16 +42,28 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     spMatrix = shortestDist_matrix(matrix)
     clustering1 = hierarchical(list_of_locations, spMatrix, numCluster)
     clustering2 = hierarchical_threshold(list_of_locations, spMatrix, threshold)
+    clustering1_index = []
+    clustering2_index = []
+    for cluster in clustering1:
+        temp = []
+        for vertex in cluster:
+            temp.append(list_of_locations.index(vertex))
+        clustering1_index.append(temp)
+    for cluster in clustering2:
+        temp = []
+        for vertex in cluster:
+            temp.append(list_of_locations.index(vertex))
+        clustering2_index.append(temp)
 
-    clusteringID = clustering1
-    for cluster in clusteringID:
+    clusteringIndex = clustering1_index
+    for cluster in clusteringIndex:
         home_count = 0
         for vertex in cluster:
             if vertex in home_index:
                 home_count+=1
         if (home_count == 0):
-            clusteringID.remove(cluster)
-    dropoffs = chooseVertice(spMatrix, clusteringID, list_of_homes)
+            clusteringIndex.remove(cluster)
+    dropoffs = chooseVertice(spMatrix, clusteringIndex, home_index, starting_index)
     newSPMatrix = chrisInput_onlySelectedVertices(matrix, dropoffs)
 
     Path = []
