@@ -2,7 +2,7 @@ import networkx as nx
 import numpy as np
 from sklearn import cluster
 import dijkstra
-
+import itertools
 
 def decimal_digits_check(number):
     number = str(number)
@@ -164,26 +164,30 @@ def shortestPath(adjMatrix, start, end):
             return path
 
 
-def minHierarchical(adjMatrix):
+def hierarchical(locations, shortestDistMatrix, numCluster):
     """
-    Use Hierarchical clustering (min) to return a list where each element is a list of points in the clustering
+    Use Hierarchical clustering to return a list where each element is a list of points in the clustering
     """
+    group = cluster.AgglomerativeClustering(n_clusters=numCluster, affinity='precomputed', linkage='average',
+                                            distance_threshold=None).fit(shortestDistMatrix).labels_
+    splitLength = []
+    for i in range(numCluster):
+        splitLength.append(list(group).count(i))
+    clustering = [locations[x - y: x] for x, y in zip(itertools.accumulate(splitLength), splitLength)]
+    return clustering
 
-    return None
 
-
-def maxHierarchical(adjMatrix):
+def hierarchical_threshold(locations, shortestDistMatrix, threshold):
     """
-    Use Hierarchical clustering (max) to return a list where each element is a list of points in the clustering
+    Use Hierarchical clustering (with distance threshold) to return a list where
+    each element is a list of points in the clustering.
     """
-
-    return None
-
-
-def aveHierarchical(adjMatrix):
-    """
-    Use Hierarchical clustering (ave) to return a list where each element is a list of points in the clustering
-    """
-
-    return None
+    group = cluster.AgglomerativeClustering(n_clusters=None, affinity='precomputed', compute_full_tree=True,
+                                            linkage='average',
+                                            distance_threshold=threshold).fit(shortestDistMatrix).labels_
+    splitLength = []
+    for i in range(len(set(group))):
+        splitLength.append(list(group).count(i))
+    clustering = [locations[x - y: x] for x, y in zip(itertools.accumulate(splitLength), splitLength)]
+    return clustering
 
