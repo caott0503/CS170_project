@@ -1,4 +1,4 @@
-from shortestpath2 import *
+from dijkstra import *
 
 
 
@@ -14,7 +14,7 @@ def chrisInput(mat, points):
         gg = g.dijkstra(graph,points[i])
         j = i
         while (j < len(points)):
-            listToAdd = gg[3][points[j]]
+            listToAdd = gg[points[j]]
             for i in range(0, len(listToAdd)-1):
         	    if (output[listToAdd[i]][listToAdd[i+1]] == float("inf")):
         		    output[listToAdd[i]][listToAdd[i+1]] = mat[listToAdd[i]][listToAdd[i+1]]
