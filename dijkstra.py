@@ -68,5 +68,5 @@ class Graph:
             tl = []
             self.printPath(parent, i, tl)
             all_paths.append(tl)
-        return paths, max_path, temp_list, all_paths
+        return all_paths
 
