@@ -68,11 +68,9 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     newSPMatrix = chrisInput_onlySelectedVertices(matrix, dropoffs)
 
     SPMatrix_graph = np.array(newSPMatrix)
-<<<<<<< HEAD
+
     Path = christofides.christofides_tsp(SPMatrix_graph, starting_node = starting_index)
-=======
-    Path = christofides_tsp.christofides_tsp(SPMatrix_graph, starting_node = starting_index)
->>>>>>> f7b0f1c556b08edd9a3dbf3941ee5515bd55ce90
+
 
     finalPath = add_vertices_to_result(Path, matrix)
 
