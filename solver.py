@@ -72,14 +72,16 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
 
     finalPath = add_vertices_to_result(Path, matrix)
 
+    dropoff_Loc = homesInEachCluster(clusteringIndex, home_index)
     dropoffLocations = {}
 
     for i in finalPath:
         if i in set(dropoffs):
-            dropoffLocations[i] = []
-            dropoffLocations[i].append
-            
-
+            dropoffLocations[i] = dropoff_Loc[i]
+    for location, homes in dropoffLocations.items():
+        location = list_of_locations[location]
+        for home in homes:
+            home = list_of_homes[home]
 
 
     for i in finalPath:
