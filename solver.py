@@ -32,7 +32,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     numHomes = len(list_of_homes)
 
     lower = int(numHomes / 3)
-    upper = numHomes
+    upper = numHomes + 1
     cost = float('inf')
     finalPath = []
     dropoffLocations = {}
