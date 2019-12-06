@@ -3,7 +3,7 @@ import numpy as np
 from random import randint
 
 
-def minimal_spanning_tree(graph, mode='Prim', starting_node=None):
+def minimal_spanning_tree(graph, mode='Prim', starting_node):
     """
     Args:
         graph:  weighted adjacency matrix as 2d np.array
