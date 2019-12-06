@@ -225,7 +225,7 @@ def chooseVertice(shortestDistMatrix, clustersIndex, homes, start):
 
 def chrisInput_withVerticesInPath(matrix, vertices):
     """
-    Create a new pairwise shortest path matrix given vertices.
+    Create a new pairwise shortest path matrix given vertices with other vertices on the path.
     """
     output = []
     for i in range(len(matrix)):
@@ -270,7 +270,7 @@ def chrisInput_withVerticesInPath(matrix, vertices):
 
 def chrisInput_onlySelectedVertices(matrix, vertices):
     """
-    Create a shortest
+    Create a new pairwise shortest path matrix given vertices.
     """
     output = shortestDist_matrix(matrix)
     indexes = vertices
@@ -285,18 +285,51 @@ def chrisInput_onlySelectedVertices(matrix, vertices):
         del output[i]
     return output
 
+
 def homesInEachCluster(clusters, home_index):
+    """
+    Return the home indexes in each cluster.
+    """
     homesInEachCluster = []
     for cluster in clusters:
         homeInThisCluster = []
         for vertex in cluster:
             if vertex in home_index:
-                homes_in_cluster.append(vertex)
+                homeInThisCluster.append(vertex)
         homesInEachCluster.append(homeInThisCluster)
     return homesInEachCluster
 
 
+def add_vertices_to_result(path, graph):
+    """
+    Revert a valid path given the path and matrix.
+    """
+    path_result = []
+    path_result_set = set(path_result)
+    start_index = 0
+    end_index = 1
+    while end_index < len(path):
+        if path[end_index] in path_result_set and path[end_index] != path[0]:
+            end_index += 1
+        else:
+            path_between_two_points = shortestPath(graph, path[start_index], path[end_index])
+            path_result.extend(path_between_two_points[:-1])
+            path_result_set = set(path_result);
+            start_index = end_index
+            end_index += 1
+    path_result.append(path[-1])
+    return path_result
 
+
+def optimal_k(adjMatrix, numHomes, clustering):
+    """
+    Return the optimal number of clusters using Nearest Neighbor Heuristic.
+    """
+    lower = numHomes / 3
+    upper = numHomes
+    for i in range(lower, upper):
+        clustering = []
+    return None
 
 
 
