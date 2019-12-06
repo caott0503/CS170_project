@@ -322,6 +322,14 @@ def add_vertices_to_result(path, graph):
     path_result.append(path[-1])
     return path_result
 
+def put_starting_point_at_first(path, starting_index) :
+    path_starting = []
+    for i in path:
+        if i == starting_index:
+            path_starting = path[path.index(i):] + path[:path.index(i)]
+            break
+    path_starting.append(path_starting[0])
+    return path_starting
 
 # def cost(clustering, vertices, locations, homes, spMatrix):
 #     """

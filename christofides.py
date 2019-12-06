@@ -9,7 +9,7 @@ from networkx.algorithms.euler import eulerian_circuit
 from mst_utils import minimal_spanning_tree
 
 
-def christofides_tsp(graph, starting_node):
+def christofides_tsp(graph, starting_node=0):
     """
     Christofides TSP algorithm
     http://www.dtic.mil/dtic/tr/fulltext/u2/a025602.pdf
@@ -28,7 +28,7 @@ def christofides_tsp(graph, starting_node):
         >>> christofides_tsp(graph)
     """
 
-    mst = minimal_spanning_tree(graph, 'Prim', starting_node)
+    mst = minimal_spanning_tree(graph, 'Prim', starting_node=0)
     odd_degree_nodes = list(_get_odd_degree_vertices(mst))
     odd_degree_nodes_ix = np.ix_(odd_degree_nodes, odd_degree_nodes)
     nx_graph = nx.from_numpy_array(-1 * graph[odd_degree_nodes_ix])
@@ -39,7 +39,7 @@ def christofides_tsp(graph, starting_node):
                                   weight=graph[odd_degree_nodes[edge[0]]][odd_degree_nodes[edge[1]]])
     euler_tour = list(eulerian_circuit(euler_multigraph, source=starting_node))
     path = list(itertools.chain.from_iterable(euler_tour))
-    return _remove_repeated_vertices(path, starting_node)
+    return _remove_repeated_vertices(path, starting_node)[:-1]
 
 
 def _get_odd_degree_vertices(graph):
@@ -61,3 +61,11 @@ def _remove_repeated_vertices(path, starting_node):
     path = list(dict.fromkeys(path).keys())
     path.append(starting_node)
     return path
+
+#
+# graph = np.array([[  0, 300, 250, 190, 230],
+#                    [300,   0, 230, 330, 150],
+#                    [250, 230,   0, 240, 120],
+#                    [190, 330, 240,   0, 220],
+#                    [230, 150, 120, 220,   0]])
+# print(christofides_tsp(graph))

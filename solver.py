@@ -71,10 +71,13 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         SPMatrix_graph = np.array(newSPMatrix)
         # SPMatrix_graph = adjacency_matrix_to_graph(newSPMatrix)[0]
 
-        Path = christofides.christofides_tsp(SPMatrix_graph, starting_node=starting_index)
+        Path = christofides.christofides_tsp(SPMatrix_graph)
         realPath = []
+        #change index of smaller matrix to original
         for i in Path:
             realPath.append(dropOffs[i])
+
+        realPath = put_starting_point_at_first(realPath, starting_index)
 
         validPath = add_vertices_to_result(realPath, matrix)
         dropoff_Loc = homesInEachCluster(clusteringIndex, home_index)
