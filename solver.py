@@ -36,7 +36,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     starting_index = list_of_locations.index(starting_car_location)
 
     lower = int(numHomes / 2)
-    upper = numHomes + 1
+    upper = int(4/5 * numHomes) + 1
     cost = float('inf')
     finalPath = []
     dropoffLocations = {}
@@ -88,7 +88,8 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
 
         for i in validPath:
             if i in set(dropOffs):
-                locations[i] = dropoff_Loc[dropOffs.index(i)]
+                if dropoff_Loc[dropOffs.index(i)]:
+                    locations[i] = dropoff_Loc[dropOffs.index(i)]
 
         # for location, homes in dropoffLocations.items():
         #     location = list_of_locations[location]
