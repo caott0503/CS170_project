@@ -45,7 +45,6 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     #clustering2 = hierarchical_threshold(list_of_locations, spMatrix, threshold)
     clustering1_index = []
     clustering2_index = []
-    print(home_index)
     for cluster in clustering1:
         temp = []
         for vertex in cluster:
@@ -76,21 +75,26 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
 
 
     finalPath = add_vertices_to_result(Path_real, matrix)
+    finalPath_index = copy.deepcopy(finalPath)
     dropoff_Loc = homesInEachCluster(clusteringIndex, home_index)
     dropoffLocations = {}
+    dropoff_Locations_index = {}
 
     for i in finalPath:
         if i in set(dropoffs):
             dropoffLocations[i] = dropoff_Loc[dropoffs.index(i)]
-    for location, homes in dropoffLocations.items():
-        location = list_of_locations[location]
-        for home in homes:
-            home = list_of_locations[home]
+            dropoff_Locations_index[i] = dropoff_Loc[dropoffs.index(i)]
 
-
-    for i in finalPath:
-        i = list_of_locations[i]
-
+    # for location, homes in dropoffLocations.items():
+    #     location = list_of_locations[location]
+    #     for home in homes:
+    #         home = list_of_locations[home]
+    #
+    # for i in finalPath:
+    #     i = list_of_locations[i]
+    #
+    # print(finalPath_index)
+    # print(dropoff_Locations_index)
 
     return finalPath, dropoffLocations
 
