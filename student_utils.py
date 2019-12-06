@@ -314,35 +314,30 @@ def add_vertices_to_result(path, graph):
         else:
             path_between_two_points = shortestPath(graph, path[start_index], path[end_index])
             path_result.extend(path_between_two_points[:-1])
-            path_result_set = set(path_result);
+            path_result_set = set(path_result)
             start_index = end_index
             end_index += 1
     path_result.append(path[-1])
     return path_result
 
 
-def optimal_k(adjMatrix, numHomes, clustering):
-    """
-    Return the optimal number of clusters using Nearest Neighbor Heuristic.
-    """
-    lower = numHomes / 3
-    upper = numHomes
-    for i in range(lower, upper):
-        clustering = []
-    return None
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# def cost(clustering, vertices, locations, homes, spMatrix):
+#     """
+#     Return the approximate cost of clusters using Nearest Neighbor Heuristic with
+#     shortest path matrix and a smaller adjacency matrix.
+#     """
+#     # lower = numHomes / 3
+#     # upper = numHomes
+#     # for i in range(lower, upper):
+#     #     clustering = hierarchical(locations, shortestDistMatrix, i)
+#     #     vertices = chooseVertice(shortestDistMatrix, clustersIndex, homes, start)
+#
+#     peopleCost = 0
+#     for i in range(len(vertices)):
+#         for ele in clustering[i]:
+#             if ele in homes:
+#                 peopleCost += spMatrix[locations.index(vertices[i])][locations.index(ele)]
+#     carCost = 0
+#
+#
+#     return carCost + peopleCost
