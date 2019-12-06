@@ -208,8 +208,8 @@ def chooseVertice(shortestDistMatrix, clustersIndex, homes, start):
     vertices = []
     for cluster in clustersIndex:
         if start in cluster:
-            vertices.append(cluster[cluster.index(start)])
-            # vertices.append(start)
+            # vertices.append(cluster[cluster.index(start)])
+            vertices.append(start)
             continue
         homes_in_cluster = []
         for point in cluster:

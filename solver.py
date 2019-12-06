@@ -33,6 +33,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     matrix = convert_matrix(adjacency_matrix)
     spMatrix = shortestDist_matrix(matrix)
     graph = adjacency_matrix_to_graph(matrix)[0]
+    starting_index = list_of_locations.index(starting_car_location)
 
     lower = int(numHomes / 2)
     upper = numHomes + 1
@@ -42,7 +43,6 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     # threshold = numHomes
 
     home_index = []
-    starting_index = list_of_locations.index(starting_car_location)
     for i in range(numLocations):
         if list_of_locations[i] in list_of_homes:
             home_index.append(i)
@@ -57,7 +57,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
             clustering_index.append(temp)
 
         clusteringIndex = copy.deepcopy(clustering_index)
-        for c in clusteringIndex:
+        for c in clustering_index:
             home_count = 0
             for vertex in c:
                 if vertex in home_index:
@@ -72,11 +72,11 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         # SPMatrix_graph = adjacency_matrix_to_graph(newSPMatrix)[0]
 
         Path = christofides.christofides_tsp(SPMatrix_graph, starting_node=starting_index)
-        Path_real = []
+        realPath = []
         for i in Path:
-            Path_real.append(dropOffs[i])
+            realPath.append(dropOffs[i])
 
-        validPath = add_vertices_to_result(Path_real, matrix)
+        validPath = add_vertices_to_result(realPath, matrix)
         dropoff_Loc = homesInEachCluster(clusteringIndex, home_index)
         locations = {}
 
