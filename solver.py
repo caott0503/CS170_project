@@ -4,8 +4,8 @@ sys.path.append('..')
 sys.path.append('../..')
 import argparse
 import utils
-import acopy
-import christofides
+from pytsp import christofides_tsp
+from pytsp import k_opt_tsp
 
 from student_utils import *
 """
@@ -47,7 +47,11 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         if list_of_locations[i] in list_of_homes:
             home_index.append(i)
 
-    for numCluster in range(lower, upper):
+    step = 1
+    if numLocations == 200:
+        step = 2
+
+    for numCluster in range(lower, upper, step):
         clustering = hierarchical(list_of_locations, spMatrix, numCluster)
         clustering_index = []
         for c in clustering:
@@ -67,13 +71,12 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
 
         dropOffs = chooseVertice(spMatrix, clusteringIndex, home_index, starting_index)
         newSPMatrix = chrisInput_onlySelectedVertices(matrix, dropOffs)
-
         SPMatrix_graph = np.array(newSPMatrix)
-        # SPMatrix_graph = adjacency_matrix_to_graph(newSPMatrix)[0]
 
-        Path = christofides.christofides_tsp(SPMatrix_graph)
+        # Path = christofides_tsp.christofides_tsp(SPMatrix_graph)
+        Path = k_opt_tsp.tsp_3_opt(SPMatrix_graph)
         realPath = []
-        #change index of smaller matrix to original
+        # change index of smaller matrix to original
         for i in Path:
             realPath.append(dropOffs[i])
 
