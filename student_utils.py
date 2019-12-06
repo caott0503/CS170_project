@@ -225,7 +225,7 @@ def chooseVertice(shortestDistMatrix, clustersIndex, homes, start):
 
 def chrisInput_withVerticesInPath(matrix, vertices):
     """
-    Create a pairwise shortest path matrix given vertices with new vertices on the path.
+    Create a new pairwise shortest path matrix given vertices.
     """
     output = []
     for i in range(len(matrix)):
@@ -270,42 +270,46 @@ def chrisInput_withVerticesInPath(matrix, vertices):
 
 def chrisInput_onlySelectedVertices(matrix, vertices):
     """
-    Create a pairwise shortest path matrix for given vertices.
+    Create a shortest
     """
-    spMatrix = shortestDist_matrix(matrix)
+    output = shortestDist_matrix(matrix)
     indexes = vertices
     no_indexes = []
     for i in range(len(matrix)):
         if i not in indexes:
             no_indexes.append(i)
-    for i in spMatrix:
+    for i in output:
         for j in sorted(no_indexes, reverse=True):
             del i[j]
     for i in sorted(no_indexes, reverse=True):
-        del spMatrix[i]
-    return spMatrix
+        del output[i]
+    return output
+
+def homesInEachCluster(clusters, home_index):
+    homesInEachCluster = []
+    for cluster in clusters:
+        homeInThisCluster = []
+        for vertex in cluster:
+            if vertex in home_index:
+                homes_in_cluster.append(vertex)
+        homesInEachCluster.append(homeInThisCluster)
+    return homesInEachCluster
 
 
-def add_vertices_to_result(path, graph):
-    """
-    Revert the path given by tsp algorithm to a valid path.
-    """
-    path_result = []
-    path_result_set = set(path_result)
-    start_index = 0
-    end_index = 1
-    while end_index < len(path):
-        if path[end_index] in path_result_set and path[end_index] != path[0]:
-            end_index += 1
-        else:
-            path_between_two_points = shortestPath(graph, path[start_index], path[end_index])
-            #print(path[start_index])
-            #print(path[end_index])
-            path_result.extend(path_between_two_points[:-1])
-            path_result_set = set(path_result)
-            start_index = end_index
-            end_index += 1
-    path_result.append(path[-1])
-    #print(path_result)
-    return path_result
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
