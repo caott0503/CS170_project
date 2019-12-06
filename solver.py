@@ -60,7 +60,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         for c in clustering_index:
             home_count = 0
             for vertex in c:
-                if vertex in home_index:
+                if vertex in home_index or vertex == starting_index:
                     home_count += 1
             if home_count == 0:
                 clusteringIndex.remove(c)
