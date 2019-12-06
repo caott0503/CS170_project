@@ -203,11 +203,13 @@ def hierarchical_threshold(locations, shortestDistMatrix, threshold):
 def chooseVertice(shortestDistMatrix, clustersIndex, homes, start):
     """
     Choose a vertex index from each cluster so that it minimizes the distance to homes in each cluster.
+    If starting point is in the cluster, pick starting point.
     """
     vertices = []
     for cluster in clustersIndex:
         if start in cluster:
             vertices.append(cluster[cluster.index(start)])
+            # vertices.append(start)
             continue
         homes_in_cluster = []
         for point in cluster:
