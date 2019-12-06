@@ -15,7 +15,7 @@ from student_utils import *
 ======================================================================
 """
 # read file
-fp = open('200.in')
+fp = open('249_200.in')
 vertices_num = int(fp.readline())
 home_num = int(fp.readline())
 vertices = fp.readline()
