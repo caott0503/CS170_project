@@ -206,22 +206,22 @@ def chooseVertice(shortestDistMatrix, clustersIndex, homes, start):
     If starting point is in the cluster, pick starting point.
     """
     vertices = []
-    for cluster in clustersIndex:
-        if start in cluster:
-            vertices.append(cluster[cluster.index(start)])
-            # vertices.append(start)
+    for c in clustersIndex:
+        if start in c:
+            # vertices.append(cluster[cluster.index(start)])
+            vertices.append(start)
             continue
         homes_in_cluster = []
-        for point in cluster:
+        for point in c:
             if point in homes:
                 homes_in_cluster.append(point)
         distances = []
-        for point in cluster:
+        for point in c:
             distance = 0
             for home in homes_in_cluster:
                 distance += shortestDistMatrix[point][home]
             distances.append(distance)
-        vertices.append(cluster[distances.index(min(distances))])
+        vertices.append(c[distances.index(min(distances))])
     return vertices
 
 
