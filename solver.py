@@ -42,7 +42,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     matrix = convert_matrix(adjacency_matrix)
     spMatrix = shortestDist_matrix(matrix)
     clustering1 = hierarchical(list_of_locations, spMatrix, numCluster)
-    clustering2 = hierarchical_threshold(list_of_locations, spMatrix, threshold)
+    #clustering2 = hierarchical_threshold(list_of_locations, spMatrix, threshold)
     clustering1_index = []
     clustering2_index = []
     for cluster in clustering1:
@@ -50,11 +50,11 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         for vertex in cluster:
             temp.append(list_of_locations.index(vertex))
         clustering1_index.append(temp)
-    for cluster in clustering2:
+    '''for cluster in clustering2:
         temp = []
         for vertex in cluster:
             temp.append(list_of_locations.index(vertex))
-        clustering2_index.append(temp)
+        clustering2_index.append(temp)'''
 
     clusteringIndex = clustering1_index
     for cluster in clusteringIndex:
@@ -68,7 +68,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     newSPMatrix = chrisInput_onlySelectedVertices(matrix, dropoffs)
 
     SPMatrix_graph = np.array(newSPMatrix)
-    Path = christofides_tsp(SPMatrix_graph, starting_node = starting_index)
+    Path = christofides_tsp.christofides_tsp(SPMatrix_graph, starting_node = starting_index)
 
     finalPath = add_vertices_to_result(Path, matrix)
 
