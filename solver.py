@@ -5,6 +5,7 @@ sys.path.append('../..')
 import argparse
 import utils
 import acopy
+import christofides_tsp
 
 from student_utils import *
 """
