@@ -5,7 +5,7 @@ sys.path.append('../..')
 import argparse
 import utils
 import acopy
-import christofides_tsp
+import christofides
 
 from student_utils import *
 """
@@ -68,7 +68,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     newSPMatrix = chrisInput_onlySelectedVertices(matrix, dropoffs)
 
     SPMatrix_graph = np.array(newSPMatrix)
-    Path = christofides_tsp(SPMatrix_graph, starting_node = starting_index)
+    Path = christofides.christofides_tsp(SPMatrix_graph, starting_node = starting_index)
 
     finalPath = add_vertices_to_result(Path, matrix)
 
