@@ -30,71 +30,82 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     """
     numLocations = len(list_of_locations)
     numHomes = len(list_of_homes)
-    numCluster = numHomes
-    threshold = numHomes
-    vertices_index = range(len(list_of_locations))
-    home_index = []
-    starting_index = list_of_locations.index(starting_car_location)
-    for i in range(len(list_of_locations)):
-        if list_of_locations[i] in list_of_homes:
-            home_index.append(i)
 
-    matrix = convert_matrix(adjacency_matrix)
-    spMatrix = shortestDist_matrix(matrix)
-    clustering1 = hierarchical(list_of_locations, spMatrix, numCluster)
-    #clustering2 = hierarchical_threshold(list_of_locations, spMatrix, threshold)
-    clustering1_index = []
-    clustering2_index = []
-    for cluster in clustering1:
-        temp = []
-        for vertex in cluster:
-            temp.append(list_of_locations.index(vertex))
-        clustering1_index.append(temp)
-    '''for cluster in clustering2:
-        temp = []
-        for vertex in cluster:
-            temp.append(list_of_locations.index(vertex))
-        clustering2_index.append(temp)'''
-
-    clusteringIndex = clustering1_index
-    for cluster in clusteringIndex:
-        home_count = 0
-        for vertex in cluster:
-            if vertex in home_index:
-                home_count+=1
-        if (home_count == 0):
-            clusteringIndex.remove(cluster)
-    dropoffs = chooseVertice(spMatrix, clusteringIndex, home_index, starting_index)
-    newSPMatrix = chrisInput_onlySelectedVertices(matrix, dropoffs)
-    SPMatrix_graph = np.array(newSPMatrix)
-
-    Path = christofides.christofides_tsp(SPMatrix_graph, starting_node = starting_index)
-    Path_real = []
-    for i in Path:
-        Path_real.append(dropoffs[i])
-
-
-    finalPath = add_vertices_to_result(Path_real, matrix)
-    finalPath_index = copy.deepcopy(finalPath)
-    dropoff_Loc = homesInEachCluster(clusteringIndex, home_index)
+    lower = int(numHomes / 3)
+    upper = numHomes
+    cost = float('inf')
+    finalPath = []
     dropoffLocations = {}
-    dropoff_Locations_index = {}
 
-    for i in finalPath:
-        if i in set(dropoffs):
-            dropoffLocations[i] = dropoff_Loc[dropoffs.index(i)]
-            dropoff_Locations_index[i] = dropoff_Loc[dropoffs.index(i)]
+    for numCluster in range(lower, upper):
+        # threshold = numHomes
+        # vertices_index = range(len(list_of_locations))
+        home_index = []
+        starting_index = list_of_locations.index(starting_car_location)
+        for i in range(len(list_of_locations)):
+            if list_of_locations[i] in list_of_homes:
+                home_index.append(i)
 
-    # for location, homes in dropoffLocations.items():
-    #     location = list_of_locations[location]
-    #     for home in homes:
-    #         home = list_of_locations[home]
-    #
-    # for i in finalPath:
-    #     i = list_of_locations[i]
-    #
-    # print(finalPath_index)
-    # print(dropoff_Locations_index)
+        matrix = convert_matrix(adjacency_matrix)
+        spMatrix = shortestDist_matrix(matrix)
+        clustering1 = hierarchical(list_of_locations, spMatrix, numCluster)
+        clustering1_index = []
+        # clustering2 = hierarchical_threshold(list_of_locations, spMatrix, threshold)
+        # clustering2_index = []
+
+        for c in clustering1:
+            temp = []
+            for vertex in c:
+                temp.append(list_of_locations.index(vertex))
+            clustering1_index.append(temp)
+
+        # for cluster in clustering2:
+        #     temp = []
+        #     for vertex in cluster:
+        #         temp.append(list_of_locations.index(vertex))
+        #     clustering2_index.append(temp)
+
+        clusteringIndex = clustering1_index
+        for c in clusteringIndex:
+            home_count = 0
+            for vertex in c:
+                if vertex in home_index:
+                    home_count += 1
+            if home_count == 0:
+                clusteringIndex.remove(c)
+        dropoffs = chooseVertice(spMatrix, clusteringIndex, home_index, starting_index)
+        newSPMatrix = chrisInput_onlySelectedVertices(matrix, dropoffs)
+        SPMatrix_graph = np.array(newSPMatrix)
+
+        Path = christofides.christofides_tsp(SPMatrix_graph, starting_node=starting_index)
+        Path_real = []
+        for i in Path:
+            Path_real.append(dropoffs[i])
+
+        validPath = add_vertices_to_result(Path_real, matrix)
+        dropoff_Loc = homesInEachCluster(clusteringIndex, home_index)
+        locations = {}
+
+        for i in validPath:
+            if i in set(dropoffs):
+                locations[i] = dropoff_Loc[dropoffs.index(i)]
+
+        # for location, homes in dropoffLocations.items():
+        #     location = list_of_locations[location]
+        #     for home in homes:
+        #         home = list_of_locations[home]
+        #
+        # for i in finalPath:
+        #     i = list_of_locations[i]
+        #
+        # print(finalPath_index)
+        # print(dropoff_Locations_index)
+
+        temp = cost_of_solution(matrix, validPath, locations)
+        if temp < cost:
+            cost = temp
+            finalPath = validPath
+            dropoffLocations = locations
 
     return finalPath, dropoffLocations
 
