@@ -66,9 +66,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         if (home_count == 0):
             clusteringIndex.remove(cluster)
     dropoffs = chooseVertice(spMatrix, clusteringIndex, home_index, starting_index)
-    print(dropoffs)
     newSPMatrix = chrisInput_onlySelectedVertices(matrix, dropoffs)
-    print(newSPMatrix)
     SPMatrix_graph = np.array(newSPMatrix)
 
     Path = christofides.christofides_tsp(SPMatrix_graph, starting_node = starting_index)
@@ -76,10 +74,8 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     for i in Path:
         Path_real.append(dropoffs[i])
 
-    print(Path_real)
 
     finalPath = add_vertices_to_result(Path_real, matrix)
-    print(finalPath)
     dropoff_Loc = homesInEachCluster(clusteringIndex, home_index)
     dropoffLocations = {}
 

@@ -62,9 +62,9 @@ def _remove_repeated_vertices(path, starting_node):
     path.append(starting_node)
     return path
 
-graph_ori = [[0, 1, 1, 1, float('inf')], [1, 0, 1, float('inf'), 1], [1, 1, 0, float('inf'), 1], [1, float('inf'), float('inf'), 0, 1], [float('inf'), 1, 1, 1, 0]]
-print(graph_ori)
+#graph_ori = [[0, 1, 1, 1, float('inf')], [1, 0, 1, float('inf'), 1], [1, 1, 0, float('inf'), 1], [1, float('inf'), float('inf'), 0, 1], [float('inf'), 1, 1, 1, 0]]
+#print(graph_ori)
 
-graph = np.array(graph_ori)
+#graph = np.array(graph_ori)
 
-print(christofides_tsp(graph))
+#print(christofides_tsp(graph))
