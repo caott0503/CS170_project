@@ -71,10 +71,20 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     Path = christofides_tsp(SPMatrix_graph, starting_node = starting_index)
 
     finalPath = add_vertices_to_result(Path, matrix)
+
+    dropoffLocations = {}
+
+    for i in finalPath:
+        if i in set(dropoffs):
+            dropoffLocations[i] = []
+            dropoffLocations[i].append
+            
+
+
+
     for i in finalPath:
         i = list_of_locations[i]
 
-    dropoffLocations = {}
 
     return finalPath, dropoffLocations
 
