@@ -6,7 +6,7 @@ import networkx as nx
 from networkx.algorithms.matching import max_weight_matching
 from networkx.algorithms.euler import eulerian_circuit
 
-from pytsp.utils import minimal_spanning_tree
+from mst_utils import minimal_spanning_tree
 
 
 def christofides_tsp(graph, starting_node=0):
