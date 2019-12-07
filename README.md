@@ -1,7 +1,7 @@
 # project-fa19
 CS 170 Fall 2019 Project
 
-###Instruction
+#Instruction
 ```bash
 python solver.py --all inputs
 ```
