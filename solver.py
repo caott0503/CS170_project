@@ -73,8 +73,9 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         newSPMatrix = chrisInput_onlySelectedVertices(matrix, dropOffs)
         SPMatrix_graph = np.array(newSPMatrix)
 
-        # Path = christofides_tsp.christofides_tsp(SPMatrix_graph)
-        Path = k_opt_tsp.tsp_3_opt(SPMatrix_graph)
+        Path = christofides_tsp.christofides_tsp(SPMatrix_graph)
+        # Path = k_opt_tsp.tsp_2_opt(SPMatrix_graph, christofides_tsp.christofides_tsp(SPMatrix_graph))
+        # Path = k_opt_tsp.tsp_3_opt(SPMatrix_graph)
         realPath = []
         # change index of smaller matrix to original
         for i in Path:
@@ -108,6 +109,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
             finalPath = validPath
             dropoffLocations = locations
 
+    print(cost)
     return finalPath, dropoffLocations
 
 
